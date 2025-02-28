@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finnovate Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .wallet-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            margin: auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .btn {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-add {
+            background: #28a745;
+        }
+        .btn-remove {
+            background: #dc3545;
+        }
+        .btn-transfer {
+            background: #ffc107;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        input, select {
+            width: 80%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="wallet-container">
+        <h1>Finnovate Wallet</h1>
+        <p>Manage your funds securely and seamlessly.</p>
+
+        <!-- User Selection -->
+        <label for="username">Select User:</label>
+        <select id="username">
+            <option value="user1">User 1</option>
+            <option value="user2">User 2</option>
+        </select>
+
+        <!-- Balance Display -->
+        <h3>Wallet Balance: <span id="balance">Loading...</span> Finnocoins</h3>
+
+        <!-- Deposit Funds -->
+        <input type="number" id="depositAmount" placeholder="Enter amount in INR">
+        <p>Finnocoins received: <span id="convertedAmount">0</span></p>
+        <button class="btn btn-add" onclick="depositFunds()">Deposit Funds</button>
+
+        <!-- Withdraw Funds -->
+        <input type="number" id="withdrawAmount" placeholder="Enter amount in Finnocoins">
+        <button class="btn btn-remove" onclick="withdrawFunds()">Withdraw Funds</button>
+        <p>Remaining Balance: <span id="remainingBalance">Loading...</span> Finnocoins</p>
+
+        <!-- Transfer Finnocoins -->
+        <input type="text" id="receiver" placeholder="Receiver Username">
+        <input type="number" id="transferAmount" placeholder="Amount to Transfer">
+        <button class="btn btn-transfer" onclick="transferFunds()">Transfer Finnocoins</button>
+    </div>
+
+    <script>
+        const baseUrl = "http://127.0.0.1:5000";
+
+        // Fetch Wallet Balance
+        function fetchBalance() {
+            const username = document.getElementById("username").value;
+            fetch(`${baseUrl}/balance/${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("balance").innerText = "Error";
+                    } else {
+                        document.getElementById("balance").innerText = data.finnocoins;
+                        document.getElementById("remainingBalance").innerText = data.finnocoins;
+                    }
+                });
+        }
+
+        // Convert INR to Finnocoins
+        document.getElementById("depositAmount").addEventListener("input", function() {
+            const inrAmount = parseFloat(this.value) || 0;
+            document.getElementById("convertedAmount").innerText = (inrAmount * 0.98).toFixed(2);
+        });
+
+        // Deposit Funds
+        function depositFunds() {
+            const username = document.getElementById("username").value;
+            const amount = document.getElementById("depositAmount").value;
+            fetch(`${baseUrl}/deposit`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, amount_inr: parseInt(amount) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchBalance();
+            });
+        }
+
+        // Withdraw Funds
+        function withdrawFunds() {
+            const username = document.getElementById("username").value;
+            const amount = document.getElementById("withdrawAmount").value;
+            fetch(`${baseUrl}/withdraw`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, amount_finnocoins: parseInt(amount) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById("remainingBalance").innerText -= amount; // Update remaining balance instantly
+                fetchBalance();
+            });
+        }
+
+        // Transfer Finnocoins
+        function transferFunds() {
+            const sender = document.getElementById("username").value;
+            const receiver = document.getElementById("receiver").value;
+            const amount = document.getElementById("transferAmount").value;
+            fetch(`${baseUrl}/transfer`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender, receiver, amount: parseInt(amount) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                fetchBalance();
+            });
+        }
+
+        // Auto-fetch balance on page load
+        document.getElementById("username").addEventListener("change", fetchBalance);
+        window.onload = fetchBalance;
+    </script>
+</body>
+</html>

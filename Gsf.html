@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f9ff;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #1e56a0;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            /* Increased from 1200px */
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ad-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            /* Increased from 2rem */
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .ad-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .ad-space {
+            background-color: white;
+            border-radius: 10px;
+            /* Increased from 8px */
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(30, 86, 160, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .ad-space:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(30, 86, 160, 0.2);
+        }
+
+        .ad-image {
+            height: 240px;
+            /* Increased from 180px */
+            background-color: #d1e3ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e56a0;
+            overflow: hidden;
+        }
+
+        .ad-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ad-content {
+            padding: 2rem;
+            /* Increased from 1.5rem */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ad-title {
+            font-size: 1.5rem;
+            /* Increased from 1.25rem */
+            font-weight: 600;
+            margin-bottom: 1rem;
+            /* Increased from 0.75rem */
+            color: #1e56a0;
+        }
+
+        .ad-description {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            /* Increased from 1rem */
+            flex: 1;
+            font-size: 1.1rem;
+            /* Added font size */
+        }
+
+        .ad-button {
+            background-color: #1e56a0;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            /* Increased from 4px */
+            padding: 1rem 1.25rem;
+            /* Increased from 0.75rem 1rem */
+            font-weight: 500;
+            font-size: 1.1rem;
+            /* Added font size */
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .ad-button:hover {
+            background-color: #164785;
+        }
+
+        footer {
+            background-color: #1e56a0;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: white;
+            color: #1e56a0;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease;
+            z-index: 1001;
+        }
+
+        .close-button:hover {
+            background-color: #f0f5ff;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(30, 86, 160, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(30, 86, 160, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(30, 86, 160, 0);
+            }
+        }
+
+        /* Hover timer indicator - Reduced from 2s to 1s */
+        .ad-space .hover-timer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            /* Increased from 3px */
+            width: 0%;
+            background-color: #1e56a0;
+            transition: width 1s linear;
+            z-index: 5;
+        }
+
+        .ad-space:hover .hover-timer {
+            width: 100%;
+        }
+
+        .ad-space.hover-complete .hover-timer {
+            width: 100%;
+            background-color: #4CAF50;
+        }
+
+        /* Focus effect system */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .focus-clone {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.05);
+            width: 90%;
+            max-width: 600px;
+            /* Increased from 500px */
+            background-color: white;
+            border-radius: 10px;
+            /* Increased from 8px */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            z-index: 101;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            pointer-events: none;
+        }
+
+        .focus-clone.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* When focus mode is active */
+        body.focus-mode .ad-space {
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+
+        /* Medium and larger screens */
+        @media (min-width: 768px) {
+            .focus-clone {
+                width: 70%;
+                /* Increased from 60% */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="focus-clone"></div>
+    <button class="close-button">✕</button>
+
+    <header>
+        <h1>Exclusive Offers For You</h1>
+        <p class="subtitle">Limited time deals selected just for you</p>
+    </header>
+
+    <main>
+        <div class="ad-container">
+            <!-- Ad Space 1 -->
+            <div class="ad-space pulse" data-ad-index="0">
+                <div class="hover-timer"></div>
+                <div class="ad-image">
+                    <img src="plp.png" alt="Advertisement 1">
+                </div>
+                <div class="ad-content">
+                    <h2 class="ad-title">ParkingLotPodcast</h2>
+                    <p class="ad-description">We’re Mutazz and Najya, two students who record our podcasts from the
+                        comfort of our car while parked in, you guessed it, a parking lot. Our show is all about having
+                        fun, casual conversations with our guests—no script, no pressure, just good vibes and real talk.
+
+                        Each episode, we chat about anything and everything—life, school, pop culture, and all the
+                        random stuff that comes up when you’re just hanging out with friends in the car. Whether we’re
+                        laughing, debating, or just vibing, our goal is to bring you entertaining, honest, and sometimes
+                        hilarious discussions.
+
+                        So, park it, press play, and join us for some chill convos that feel like you’re right there
+                        with us in the front seat.
+                    </p>
+                    <a href="#" class="ad-button">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Ad Space 2 -->
+            <div class="ad-space" data-ad-index="1">
+                <div class="hover-timer"></div>
+                <div class="ad-image">
+                    <img src="qd.png" alt="Advertisement 2">
+                </div>
+                <div class="ad-content">
+                    <h2 class="ad-title">
+                        Quill dynamics</h2>
+                    <p class="ad-description">Sample text</p>
+                    <a href="#" class="ad-button">Learn more</a>
+                </div>
+            </div>
+
+            <!-- Ad Space 3 -->
+            <div class="ad-space" data-ad-index="2">
+                <div class="hover-timer"></div>
+                <div class="ad-image">
+                    <img src="/api/placeholder/600/240" alt="Advertisement 3">
+                </div>
+                <div class="ad-content">
+                    <h2 class="ad-title">Ad 3</h2>
+                    <p class="ad-description">Sample text</p>
+                    <a href="#" class="ad-button">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Finnovate. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Element references
+        const body = document.body;
+        const adSpaces = document.querySelectorAll('.ad-space');
+        const overlay = document.querySelector('.overlay');
+        const focusClone = document.querySelector('.focus-clone');
+        const closeButton = document.querySelector('.close-button');
+
+        // Variable to track if we're currently in a transition
+        let isTransitioning = false;
+
+        // Close button functionality
+        closeButton.addEventListener('click', function () {
+            // First check if we're in focus mode
+            if (body.classList.contains('focus-mode')) {
+                exitFocusMode();
+                return;
+            }
+
+            // Otherwise, close the window
+            window.close();
+            // Fallback if window.close() doesn't work due to browser security
+            if (window.opener) {
+                window.history.back();
+            } else {
+                body.innerHTML = '<div style="text-align:center;padding:50px;"><p>You may now close this window.</p></div>';
+            }
+        });
+
+        // Function to enter focus mode
+        function enterFocusMode(adSpace) {
+            // Prevent multiple focus mode activations simultaneously
+            if (isTransitioning || body.classList.contains('focus-mode')) {
+                return;
+            }
+
+            isTransitioning = true;
+
+            // Clone the ad space for the focused view
+            const clone = adSpace.cloneNode(true);
+
+            // Store reference to original ad
+            clone.setAttribute('data-original-index', adSpace.getAttribute('data-ad-index'));
+
+            // Remove hover timer from clone
+            const hoverTimer = clone.querySelector('.hover-timer');
+            if (hoverTimer) {
+                hoverTimer.remove();
+            }
+
+            // Clear the existing clone content
+            focusClone.innerHTML = '';
+
+            // Add the cloned content
+            focusClone.appendChild(clone);
+
+            // Make links work in the clone
+            const cloneLinks = clone.querySelectorAll('a');
+            const originalLinks = adSpace.querySelectorAll('a');
+
+            for (let i = 0; i < cloneLinks.length; i++) {
+                cloneLinks[i].addEventListener('click', function (e) {
+                    originalLinks[i].click();
+                });
+            }
+
+            // Activate focus mode
+            body.classList.add('focus-mode');
+            overlay.classList.add('active');
+            focusClone.classList.add('active');
+
+            // Temporarily remove pulse effect if it exists
+            if (adSpace.classList.contains('pulse')) {
+                adSpace.classList.remove('pulse');
+                adSpace.setAttribute('data-had-pulse', 'true');
+            }
+
+            // Add event listener to exit focus mode when clicking outside
+            setTimeout(() => {
+                overlay.addEventListener('click', exitFocusMode);
+                isTransitioning = false;
+            }, 400); // Wait for transition to complete
+        }
+
+        // Function to exit focus mode
+        function exitFocusMode() {
+            if (isTransitioning) return;
+
+            isTransitioning = true;
+            body.classList.remove('focus-mode');
+            overlay.classList.remove('active');
+            focusClone.classList.remove('active');
+
+            // Remove overlay click event
+            overlay.removeEventListener('click', exitFocusMode);
+
+            // Get the original ad space
+            const originalIndex = focusClone.querySelector('.ad-space')?.getAttribute('data-original-index');
+            if (originalIndex) {
+                const originalAd = document.querySelector(`.ad-space[data-ad-index="${originalIndex}"]`);
+
+                // Restore pulse if it had it
+                if (originalAd && originalAd.getAttribute('data-had-pulse') === 'true') {
+                    setTimeout(() => {
+                        originalAd.classList.add('pulse');
+                    }, 300);
+                }
+            }
+
+            // Reset all hover timers and hover states
+            adSpaces.forEach(ad => {
+                ad.classList.remove('hover-complete');
+                const timer = ad.querySelector('.hover-timer');
+                if (timer) {
+                    timer.style.transition = 'none';
+                    timer.style.width = '0%';
+                    setTimeout(() => {
+                        timer.style.transition = 'width 1s linear';
+                    }, 10);
+                }
+            });
+
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 400); // Wait for transition to complete
+        }
+
+        // Track which ad space is currently being hovered
+        let currentHoveredAd = null;
+
+        // Add event listeners to each ad space for hover timer
+        adSpaces.forEach(adSpace => {
+            let hoverTimeoutId = null;
+
+            // Handle mouseenter event
+            adSpace.addEventListener('mouseenter', function () {
+                // If already in focus mode or transitioning, don't trigger new hover
+                if (body.classList.contains('focus-mode') || isTransitioning) {
+                    return;
+                }
+
+                currentHoveredAd = this;
+
+                // Set the timeout for 1 second
+                hoverTimeoutId = setTimeout(() => {
+                    if (currentHoveredAd === this) {
+                        this.classList.add('hover-complete');
+                        enterFocusMode(this);
+                    }
+                }, 1000);
+            });
+
+            // Handle mouseleave event
+            adSpace.addEventListener('mouseleave', function () {
+                // Clear the timeout if mouse leaves before timer completes
+                clearTimeout(hoverTimeoutId);
+                currentHoveredAd = null;
+
+                // Reset the hover timer
+                this.classList.remove('hover-complete');
+                const timer = this.querySelector('.hover-timer');
+                if (timer) {
+                    timer.style.transition = 'none';
+                    timer.style.width = '0%';
+                    setTimeout(() => {
+                        timer.style.transition = 'width 1s linear';
+                    }, 10);
+                }
+            });
+
+            // Add click functionality for mobile
+            adSpace.addEventListener('click', function (e) {
+                // Don't trigger if already in focus mode or transitioning
+                if (body.classList.contains('focus-mode') || isTransitioning) {
+                    return;
+                }
+
+                // Don't trigger on button or link clicks
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' ||
+                    e.target.closest('a') || e.target.closest('button')) {
+                    return;
+                }
+
+                // If already hovering for a while but not complete, trigger immediately
+                const timer = this.querySelector('.hover-timer');
+                if (timer) {
+                    const progress = parseFloat(getComputedStyle(timer).width) / parseFloat(getComputedStyle(this).width);
+
+                    // Trigger if progress is over 30% (reduced threshold)
+                    if (progress > 0.3) {
+                        clearTimeout(hoverTimeoutId);
+                        this.classList.add('hover-complete');
+                        enterFocusMode(this);
+                    } else {
+                        // Immediately trigger focus mode on click regardless of hover state
+                        this.classList.add('hover-complete');
+                        enterFocusMode(this);
+                    }
+                } else {
+                    // If timer doesn't exist for some reason, still trigger focus mode
+                    this.classList.add('hover-complete');
+                    enterFocusMode(this);
+                }
+            });
+        });
+
+        // Handle escape key to exit focus mode
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && body.classList.contains('focus-mode')) {
+                exitFocusMode();
+            }
+        });
+
+        // Fix for touch devices to properly handle hover states
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            adSpaces.forEach(adSpace => {
+                adSpace.addEventListener('touchstart', function (e) {
+                    // Cancel any existing hover timers
+                    const existingTimer = this.querySelector('.hover-timer');
+                    if (existingTimer) {
+                        existingTimer.style.transition = 'none';
+                        existingTimer.style.width = '0%';
+                        setTimeout(() => {
+                            existingTimer.style.transition = 'width 1s linear';
+                            existingTimer.style.width = '100%'; // Start animation on touch
+                        }, 10);
+                    }
+
+                    // Set timeout to trigger focus mode
+                    setTimeout(() => {
+                        // Only proceed if it's still the same element being touched
+                        this.classList.add('hover-complete');
+                        enterFocusMode(this);
+                    }, 1000);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinnoPoints - Redeem Rewards</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 1.8rem;
+        }
+
+        .points-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .points-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .redeem-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .redeem-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your FinnoPoints</h1>
+        <div class="points-container">
+            <div class="points-box">Redeemed: <span id="redeemed">200</span> Points</div>
+            <div class="points-box">Redeemable: <span id="redeemable">300</span> Points</div>
+            <div class="points-box">Lifetime Coins: <span id="lifetime">500</span></div>
+        </div>
+        <button class="redeem-btn" onclick="redeemPoints()">Redeem 100 Points</button>
+    </div>
+
+    <script>
+        function redeemPoints() {
+            let redeemable = document.getElementById("redeemable");
+            let redeemed = document.getElementById("redeemed");
+
+            let currentRedeemable = parseInt(redeemable.innerText);
+            let currentRedeemed = parseInt(redeemed.innerText);
+
+            if (currentRedeemable >= 100) {
+                redeemable.innerText = currentRedeemable - 100;
+                redeemed.innerText = currentRedeemed + 100;
+                alert("You have successfully redeemed 100 FinnoPoints!");
+            } else {
+                alert("Not enough FinnoPoints to redeem.");
+            }
+        }
+    </script>
+</body>
+</html>

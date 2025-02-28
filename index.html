@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finnovate - AI-Driven Microfinance</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffdd57;
+            transform: scale(1.1);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 50px;
+            text-align: center;
+            background: white;
+            margin: 100px 20px 20px 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Features Section */
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            width: 300px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .feature-box:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #007bff;
+        }
+
+        /* Steps Section */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .step {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Finnovate</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>AI-Driven Microfinance for Students</h2>
+        <p>Finnovate is an AI-driven microfinance platform designed for students at Presidency University, offering
+            instant, secure, and fair peer-to-peer loans. Using AI to assess eligibility and blockchain for
+            transparency, it enables seamless borrowing, lending, and investing through an in-app wallet. Users earn
+            FinnoPoints for transactions, redeemable on campus, while Fiona AI provides smart financial insights and
+            investment guidance. With fast processing, no direct bank links, and student-focused rewards, Finnovate
+            empowers financial independence and smart money management.</p>
+        <button class="btn">Get Started</button>
+    </section>
+
+    <section id="features">
+        <h2>Key Features</h2>
+        <div class="features-container">
+            <div class="feature-box" onclick="window.location.href='finovate.html'">💳 <strong>Finnovate Wallet</strong>
+                <br> Secure transactions and seamless lending.</div>
+            <div class="feature-box">🔗 <strong>MicroLoan</strong> <br>Peer to Peer Lending</div>
+            <div class="feature-box" onclick="window.location.href='FinnoPoints.html'">💳 <strong>FinnoCoins</strong>
+                <br> Earn rewards for transactions. </div>
+            <div class="feature-box">🤖 <strong>Fiona</strong> <br> AI-powered financial assistant.</div>
+            <div class="feature-box" onclick="window.location.href='Gsf.html'">🛍 <strong>GSF</strong> <br>Marketplace
+                for student entrepreneurs.</div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps-container">
+            <div class="step">📥 Students & lenders add money to their wallets.</div>
+            <div class="step">💰 Lenders fund loans from their wallets.</div>
+            <div class="step">🛒 Borrowers use the wallet balance for academic expenses.</div>
+            <div class="step">📆 Borrowers repay loans in installments.</div>
+            <div class="step">📈 Lenders withdraw profits or reinvest in new loans.</div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Have questions? Reach out to our support team.</p>
+        <p>Email: support@finnovate.com</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Finnovate. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
